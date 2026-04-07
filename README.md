@@ -1,96 +1,24 @@
-\# Implementazione e Analisi di un Host-based IDS/IPS con Suricata
+Descrizione del Progetto
 
+Questo progetto presenta la progettazione, la configurazione e la validazione di un ambiente di rete virtualizzato, realizzato con l’obiettivo di studiare e implementare un sistema di Intrusion Detection e Intrusion Prevention basato su Suricata.
 
+L’attività si concentra sull’analisi dell’efficacia e dei limiti delle tecniche di rilevamento e prevenzione, considerando diversi scenari di attacco. In particolare, il lavoro segue un approccio progressivo che parte dalle fasi di ricognizione e scanning, per arrivare fino allo sfruttamento di vulnerabilità applicative, permettendo di osservare il comportamento del sistema difensivo in contesti realistici.
 
-\## Descrizione del Progetto
+Architettura del Laboratorio
 
+L’ambiente di test è stato da noi progettato come un’infrastruttura completamente isolata e virtualizzata. La rete è composta da tre nodi che cooperano per simulare uno scenario di attacco e difesa.
 
+Il nodo attaccante è rappresentato da una macchina Kali Linux, utilizzata per eseguire attività di scanning, enumerazione e attacco. Il nodo centrale svolge il ruolo di gateway e sistema di prevenzione, ed è implementato tramite una macchina Lubuntu su cui è installato e configurato Suricata. Infine, il nodo vittima è una macchina Metasploitable 2, intenzionalmente vulnerabile, che ha a bordo diversi servizi esposti come server web e database, oltre ad applicazioni web vulnerabili come DVWA e Mutillidae, utilizzate per testare attacchi a livello applicativo.
 
-Questo elaborato illustra la progettazione, configurazione e validazione di un ambiente di rete virtualizzato finalizzato allo studio e all'implementazione di un sistema \*\*Intrusion Detection/Prevention System (IDS/IPS)\*\* basato su \*\*Suricata\*\*. 
+Scenari di Attacco e Difesa
 
+L’analisi si sviluppa attraverso una serie di scenari che mettono in relazione tecniche offensive e contromisure difensive. Nella prima fase vengono esaminate attività di footprinting, scanning ed enumeration tramite Nmap, Nikto e Dirbuster. In questa fase vengono implementate tecniche di rilevamento basate sul rate del traffico e meccanismi di blocco sfruttando il modulo recent di iptables e gli xbits di Suricata.
 
+Successivamente, l’attenzione si sposta sugli attacchi di tipo Denial of Service. In particolare, viene analizzato il comportamento di un attacco SYN Flood e la sua mitigazione attraverso regole di rate limiting applicate con iptables. Viene inoltre simulato l’attacco Slowloris, evidenziandone le caratteristiche e le modalità di rilevamento e blocco da parte del sistema.
 
-Il progetto mira a dimostrare l'efficacia (e i limiti) delle regole di rilevamento e prevenzione contro scenari di attacco, partendo dalle fasi di ricognizione fino allo sfruttamento di vulnerabilità a livello applicativo.
+Nell’ultima fase viene affrontato lo sfruttamento di vulnerabilità applicative, con particolare riferimento agli attacchi di SQL Injection. In questo contesto, vengono analizzati i pattern generati da SQLmap e sviluppate regole personalizzate in Suricata in grado di ispezionare il payload HTTP e bloccare le richieste malevole tramite azioni di drop.
 
+Autori
 
-
-\## Architettura del Laboratorio
-
-
-
-L'infrastruttura di test è stata isolata e virtualizzata, ed è composta da tre nodi principali:
-
-
-
-1\. \*\*Nodo Attaccante (Kali Linux):\*\* Macchina dedicata alla simulazione delle minacce.
-
-2\. \*\*Nodo Gateway / IPS (Lubuntu):\*\* Agisce da router/firewall per la rete interna. Ospita \*\*Suricata\*\* configurato.
-
-3\. \*\*Nodo Vittima (Metasploitable 2):\*\* Macchina target intenzionalmente vulnerabile. Ospita servizi esposti (es. server web Apache, database) e applicazioni web vulnerabili (DVWA, Mutillidae) per testare l'efficacia delle policy di blocco.
-
-
-
-\---
-
-
-
-\## Tecnologie e Strumenti Utilizzati
-
-
-
-\* \*\*Motore IDS/IPS:\*\* Suricata
-
-\* \*\*Firewalling \& Packet Filtering:\*\* iptables
-
-\* \*\*Information Gathering \& Scanning:\*\* Nmap
-
-\* \*\*Web Exploitation:\*\* SQLmap
-
-\* \*\*Denial of Service:\*\* Slowloris (Metasploit)
-
-\* \*\*Analisi del Traffico:\*\* Wireshark
-
-
-
-\---
-
-
-
-\## Scenari di Attacco e Difesa Analizzati
-
-
-
-Il progetto segue una metodologia progressiva, contrapponendo le tecniche offensive alle rispettive contromisure difensive:
-
-
-
-\* \*\*Fase 1 - Footprinting, Scanning, Enumeration (Nmap):\*\* \* Rilevamento di scansioni stealth, Aggressive e Decoy.
-
-&#x20; \* Implementazione di logiche di rilevamento rate-based e blocco dinamico tramite il modulo `recent` di iptables e gli `xbits` di Suricata.
-
-\* \*\*Fase 2 - Denial of Service:\*\*
-
-&#x20; \* Mitigazione di \*\*SYN Flood\*\* tramite regole di rate limiting (`limit`) su iptables.
-
-&#x20; \* Analisi e blocco dell'attacco \*\*Slowloris\*\*.
-
-\* \*\*Fase 3 - Exploitation Applicativo (SQL Injection):\*\*
-
-&#x20; \* Rilevamento di pattern di iniezione generati da \*\*SQLmap\*\*.
-
-&#x20; \* Creazione di firme custom in Suricata per ispezionare il payload HTTP ed eseguire il `DROP` delle richieste malevole.
-
-
-
-\---
-
-
-
-\## Autori
-
-
-
-\* \*\*Giovanni Falco\*\* (Matricola: M63/1713)
-
-\* \*\*Felice Palmiero\*\* (Matricola: M63/1744)
-
+Giovanni Falco (M63/1713)
+Felice Palmiero (M63/1744)
